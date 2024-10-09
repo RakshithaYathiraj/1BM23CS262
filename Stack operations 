@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+    void push();
+    void pop();
+    void display();
+    int s,top=-1,i;
+    int ch;
+    int stack[100];
+    int main()
+    {
+        printf("Enter size of stack");
+        scanf("%d",&s);
+        printf("Enter your choice");
+        printf("1.push, 2.pop, 3.display");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+        case 1:
+
+                push();
+
+            break;
+        case 2:
+
+                pop();
+
+            break;
+        case 3:
+
+                display();
+
+            break;
+        default:
+
+                printf("Error!!! Enter valid choice");
+
+        }
+    }
+    void push()
+    {
+        if(top==(s-1))
+        {
+            printf("Stack OVERFLOW");
+        }
+        else
+        {
+            printf("Enter the elements");
+            for(i=0;i<s;i++)
+            {
+                scanf("%d",&stack[i]);
+            }
+        }
+    }
+    void pop()
+    {
+        if(top==-1)
+        {
+            printf("Stack UNDERFLOW");
+        }
+        else
+        {
+            --top;
+        }
+    }
+   void display()
+   {
+       if (top==-1)
+       {
+           printf("Stack empty");
+       }
+       else
+       {
+           printf("Elements of the stack are");
+           for(i=(s-1);i>=0;--i)
+           {
+               printf("%d",stack[i]);
+           }
+       }
+   }
