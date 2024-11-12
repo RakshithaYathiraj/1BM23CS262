@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int twoStacks(int maxSum, int* a, int n, int* b, int m) {
+    int current_sum = 0;
+    int count_a = 0;
+   
+    // Step 1: Try removing elements from stack `a` first
+    while (count_a < n && current_sum + a[count_a] <= maxSum) {
+        current_sum += a[count_a];
+        count_a++;
+    }
+
+    // Step 2: Try removing elements from stack `b` after removing from `a`
+    int max_count = count_a;  // At least the number of elements removed from `a`
+    int count_b = 0;
+   
+    // Try to add elements from stack `b`
+    while (count_b < m && current_sum + b[count_b] <= maxSum) {
+        current_sum += b[count_b];
+        count_b++;
+        max_count = (max_count > count_a + count_b) ? max_count : count_a + count_b;
+    }
+
+    // Step 3: Now we try removing elements from stack `a` and then elements from stack `b`
+    // We already considered the initial removal from `a`, so now try to add `b` elements one by one
+    while (count_a > 0) {
+        current_sum -= a[count_a - 1];
+        count_a--;
+
+        // After removing one element from `a`, try to add more from `b`
+        while (count_b < m && current_sum + b[count_b] <= maxSum) {
+            current_sum += b[count_b];
+            count_b++;
+            max_count = (max_count > count_a + count_b) ? max_count : count_a + count_b;
+        }
+    }
+
+    return max_count;
+}
+
+int main() {
+    int t;  // number of test cases
+    scanf("%d", &t);
+
+    while (t--) {
+        int n, m, maxSum;
+        scanf("%d %d %d", &n, &m, &maxSum);
+
+        int a[n], b[m];
+       
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+
+        for (int i = 0; i < m; i++) {
+            scanf("%d", &b[i]);
+        }
+
+        // Call the function and print the result
+        printf("%d\n", twoStacks(maxSum, a, n, b, m));
+    }
+
+    return 0;
+}
