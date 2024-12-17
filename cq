@@ -1,0 +1,79 @@
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 3
+
+void insert();
+void deletion();
+void display();
+int front = -1, rear = -1, item, ch, q[MAX];
+
+int main() {
+    while (1) {
+        printf("Enter the operation to be done:");
+        printf("\n1. insert\n2. display\n3. Display\n4. Exit\n");
+        scanf("%d", &ch);
+        switch (ch) {
+            case 1:
+                insert();
+                break;
+            case 2:
+                deletion();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+}
+
+void insert() {
+    if ((rear + 1) % MAX == front) {
+        printf("Circular queue is full\n");
+        return;
+    }
+    printf("Enter an item to insert: ");
+    scanf("%d", &item);
+   
+    if (front == -1 && rear == -1) {
+        front = rear = 0; // First element
+    } else {
+        rear = (rear + 1) % MAX;
+    }
+    q[rear] = item;
+    printf("Inserted: %d\n", item);
+}
+
+void deletion() {
+    if (front == -1) {
+        printf("Circular queue is empty\n");
+        return;
+    }
+    item = q[front];
+    if (front == rear) {
+        front = rear = -1; // Queue becomes empty
+    } else {
+        front = (front + 1) % MAX;
+    }
+    printf("Deleted: %d\n", item);
+}
+
+void display() {
+    if (front == -1) {
+        printf("Circular queue is empty\n");
+        return;
+    }
+    printf("Queue: ");
+    int i = front;
+    while (1) {
+        printf("%d ", q[i]);
+        if (i == rear) break;
+        i = (i + 1) % MAX;
+    }
+    printf("\n");
+}
